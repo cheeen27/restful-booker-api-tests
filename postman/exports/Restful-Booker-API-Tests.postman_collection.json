@@ -1,0 +1,100 @@
+{
+  "info": {
+    "name": "Restful Booker API Tests",
+    "description": "API tests using Postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Booking List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://restful-booker.herokuapp.com/booking"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is an array\", function () {",
+              "    const data = pm.response.json();",
+              "    pm.expect(data).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Booking items contain bookingid\", function () {",
+              "    const data = pm.response.json();",
+              "    if (data.length > 0) {",
+              "        pm.expect(data[0]).to.have.property(\"bookingid\");",
+              "    }",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Booking Details",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://restful-booker.herokuapp.com/booking/2"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response contains firstname\", function () {",
+              "    const data = pm.response.json();",
+              "    pm.expect(data).to.have.property(\"firstname\");",
+              "});",
+              "",
+              "pm.test(\"Response contains bookingdates\", function () {",
+              "    const data = pm.response.json();",
+              "    pm.expect(data).to.have.property(\"bookingdates\");",
+              "    pm.expect(data.bookingdates).to.have.property(\"checkin\");",
+              "    pm.expect(data.bookingdates).to.have.property(\"checkout\");",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Nonexistent Booking",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://restful-booker.herokuapp.com/booking/999999999"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(\"Response body is not empty\", function () {",
+              "    pm.expect(pm.response.text()).to.not.be.empty;",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
