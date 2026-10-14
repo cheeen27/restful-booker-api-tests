@@ -25,7 +25,7 @@
 建议使用 Python 3.12 或兼容版本。
 
 ```bash
-git clone <你的 GitHub 仓库地址>
+git clone <https://github.com/cheeen27/restful-booker-api-tests>
 cd api-auto-tests
 
 python3 -m venv .venv
